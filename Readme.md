@@ -12,69 +12,38 @@ This repository contains a Laravel 11 API-only application running on Docker usi
 
 ## Quick Start
 
-### 1. Build and start containers
+### 1. 🧱 Install Laravel App using ./setup.sh ![Laravel](https://img.shields.io/badge/Laravel-11-red?logo=laravel&logoColor=white) 
+
+- Creates Docker Builds && Containers
+- Installs the PHP 8.4 application + [Swoole](https://www.php.net/manual/en/book.swoole.php)
+- Creates Laravel Project + Installs [Laravel 11](https://laravel.com/docs/11.x) + [Octane](https://laravel.com/docs/11.x/octane)
+- Installs [Laravel Sanctum](https://laravel.com/docs/11.x/sanctum)
+- Generates Laravel App key
+- Creates .env (with the correct credentials for DB / [Valkey](https://valkey.io/) / Session)
+- Configures Laravel for API-Only
+- Runs db migrations
+- Installs nodejs dependecies
+
 
 ```bash
 ./setup.sh
 ```
-or 
+or (if you need to rebuild and re-create containers)
 ```bash
 ./rebuild-docker.sh
 ```
 
-(or manually:)
-
-```bash
-docker-compose build
-docker-compose up -d
-```
-
-### 2. Install Laravel and dependencies
-
-If not using `setup.sh`, run:
-
-```bash
-docker-compose exec app composer create-project laravel/laravel . "^11.0"
-docker-compose exec app php artisan key:generate
-docker-compose exec app php artisan migrate
-docker-compose exec node npm install
-```
-
-### 3. Access the application
-
-Open your browser at [http://localhost:8000/api](http://localhost:8000/api)
-
 ---
 
-## Environment Variables
-
-Make sure your `.env` file has the following database settings for PostgreSQL:
-
-```env
-DB_CONNECTION=pgsql
-DB_HOST=db
-DB_PORT=5432
-DB_DATABASE=laravel
-DB_USERNAME=laravel
-DB_PASSWORD=secret
-
-REDIS_CLIENT=phpredis
-REDIS_HOST=valkey
-REDIS_PASSWORD=null
-REDIS_PORT=6379
-```
-
----
-
-## Running Artisan and npm commands
-
-You can run Laravel and Node commands inside their respective containers:
+### 2. ⚡ Start Laravel Octane
 
 ```bash
-docker-compose exec app php artisan migrate
-docker-compose exec app php artisan db:seed
 docker-compose exec app php artisan octane:start --server=swoole --host=0.0.0.0 --port=8000
 ```
+
+### 3. 🌐 Access the application
+
+Open your browser at [http://localhost:8000/api](http://localhost:8000/api)
 
 ---
 
